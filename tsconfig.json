@@ -24,5 +24,9 @@
         "src/environments/*"
       ]
     }
+  },
+  "angularCompilerOptions":{
+    "fullTemplateTypeCheck":true,
+    "strictInjectionParameters":true
   }
 }
