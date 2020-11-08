@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-makr-shakr"
+    }
+  },
+  "defaultProject": "ng-makr-shakr",
+  "cli": {
+    "analytics": "135fb53d-467d-498b-b03f-a3ac92660035"
+  }
 }
