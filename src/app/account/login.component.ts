@@ -4,11 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
-})
+@Component({ templateUrl: './login.component.html' })
 export class LoginComponent implements OnInit {
   form: FormGroup;
   loading = false;
@@ -25,10 +21,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     })
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log(this.returnUrl);
   }
   get f() { return this.form.controls; }
 
@@ -38,10 +35,12 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.accountService.login(this.f.username.value, this.f.password.value)
+    this.accountService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
+          console.log(data);
+          console.log(this.returnUrl);
           this.router.navigate([this.returnUrl]);
         },
         error => {
