@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '@app/_models';
-import { AccountService } from '@app/_services';
+import { AccountService, BookService, AlertService } from '@app/_services';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,11 +9,39 @@ import { AccountService } from '@app/_services';
 })
 export class HomeComponent implements OnInit {
   user: User;
-  constructor(private accountService: AccountService) {
+  form: FormGroup;
+  loading = false;
+  submitted = false;
+  constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService,
+    private bookService: BookService,
+    private alert: AlertService) {
     this.user = this.accountService.userValue;
   }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      titolo: ['', Validators.required]
+    })
   }
-
+  get f() { return this.form.controls; }
+  onSubmit() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    this.loading = true;
+    console.log(this.form.value);
+    this.bookService.insertBook(this.form.value)
+      .subscribe(() => {
+        this.alert.success('Book inserted successfully!');
+        this.loading = false;
+        this.form.reset();
+      }, () => {
+        this.alert.error("Something is gone wrong!");
+        this.loading = false;
+        this.form.reset();
+      })
+  }
 }
