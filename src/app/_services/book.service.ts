@@ -9,4 +9,7 @@ export class BookService {
     insertBook(titolo) {
         return this.http.post(`${environment.apiUrl}/api/Books`, titolo)
     }
+    getAll() {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/Books`);
+    }
 }

@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
+  books = null;
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
@@ -23,6 +24,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       titolo: ['', Validators.required]
+    })
+    this.bookService.getAll().subscribe(books => {
+      this.books = books
     })
   }
   get f() { return this.form.controls; }
@@ -43,5 +47,8 @@ export class HomeComponent implements OnInit {
         this.loading = false;
         this.form.reset();
       })
+    this.bookService.getAll().subscribe(books => {
+      this.books = books
+    })
   }
 }

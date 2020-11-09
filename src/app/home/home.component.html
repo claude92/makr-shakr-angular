@@ -21,8 +21,13 @@
                         </button>
                     </div>
                 </form>
+                <h4>Libri caricati</h4>
+                <ul>
+                    <li *ngFor="let book of books">
+                        Titolo: {{book.titolo}}
+                    </li>
+                </ul>
             </div>
-
         </div>
     </div>
 </div>
